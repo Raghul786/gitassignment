@@ -1,0 +1,75 @@
+pipeline {
+  agent any
+
+  triggers {
+    scm { // Git SCM trigger
+      // Configure your Git repository details here
+      branches {
+        // Trigger on pushes to the Develop branch
+        "develop"
+      }
+    }
+  }
+
+  environment {
+    // Define environment variables here
+    MY_ENV_VAR = 'Custom Value'
+  }
+
+  stages {
+    stage('Pull Code') {
+      steps {
+        script {
+          // Use Git for clean and efficient code pulling
+          // Specify the folder name to pull the code into
+          dir('testdirectory') { // Replace 'testdirectory' with your desired folder name
+            git branch: 'develop', // Specify develop branch
+              credentialsId: '228d3ad7-1a36-4dad-b545-a358f8e765a6', // Replace with your credentials ID
+              url: 'https://github.com/Raghul786/gitassignment.git' // Replace with your Git repository URL
+          }
+        }
+      }
+    }
+
+    // Add additional stages for building, testing, deployment, etc.
+
+    stage('Build') {
+      steps {
+        sh '''
+          # Replace with your actual build commands (e.g., mvn clean install, npm run build)
+          echo "Building the application..."
+        '''
+      }
+    }
+
+    stage('Test') {
+      steps {
+        sh '''
+          # Replace with your actual test commands (e.g., mvn test, npm run test)
+          echo "Running tests..."
+        '''
+      }
+    }
+
+    stage('Deploy') {
+      steps {
+        sh '''
+          # Replace with your actual deployment commands (e.g., scp files to server)
+          echo "Deploying application to production..."
+          echo "Value of ENV Variable is $MY_ENV_VAR"
+        '''
+      }
+    }
+  }
+
+  post {
+    success {
+      // Actions to perform when the pipeline succeeds
+      echo 'Pipeline succeeded!'
+    }
+    failure {
+      // Actions to perform when the pipeline fails
+      echo 'Pipeline failed!'
+    }
+  }
+}
