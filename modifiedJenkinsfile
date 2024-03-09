@@ -7,7 +7,7 @@ pipeline {
     // pollSCM('H/5 * * * *')  // Example: Poll every 5 minutes
     
     // - Uncomment 'githubPush' for triggering on GitHub pushes:
-    // githubPush()
+     githubPush()
   }
 
   environment {
