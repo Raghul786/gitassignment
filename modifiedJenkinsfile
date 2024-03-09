@@ -2,17 +2,16 @@ pipeline {
   agent any
 
   triggers {
-    scm { // Git SCM trigger
-      // Configure your Git repository details here
-      branches {
-        // Trigger on pushes to the Develop branch
-        "develop"
-      }
-    }
+    // Replace with your preferred trigger:
+    // - Uncomment 'pollSCM' for polling at a specific interval (replace schedule):
+    // pollSCM('H/5 * * * *')  // Example: Poll every 5 minutes
+    
+    // - Uncomment 'githubPush' for triggering on GitHub pushes:
+    // githubPush()
   }
 
   environment {
-    // Define environment variables here
+    // Define environment variables here (optional)
     MY_ENV_VAR = 'Custom Value'
   }
 
@@ -22,7 +21,7 @@ pipeline {
         script {
           // Use Git for clean and efficient code pulling
           // Specify the folder name to pull the code into
-          dir('testdirectory') { // Replace 'testdirectory' with your desired folder name
+          dir('testdirectory') { // Replace with your desired folder name
             git branch: 'develop', // Specify develop branch
               credentialsId: '228d3ad7-1a36-4dad-b545-a358f8e765a6', // Replace with your credentials ID
               url: 'https://github.com/Raghul786/gitassignment.git' // Replace with your Git repository URL
